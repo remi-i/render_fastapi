@@ -1,42 +1,12 @@
-from typing import Optional
-
 from fastapi import FastAPI
-
-import random  # randomライブラリを追加
-
-random_number = random.random()
-print("Random float number:", random_number)
-
-# 1から10までのランダムな整数を生成
-random_integer = random.randint(1, 10)
-print("Random integer:", random_integer)
-
-# リストからランダムに1つの要素を選択
-fruits = ['apple', 'banana', 'cherry', 'date']
-random_fruit = random.choice(fruits)
-print("Random fruit:", random_fruit)
-
-# リストの要素をランダムに並び替え
-cards = ['Ace', 'King', 'Queen', 'Jack', '10', '9']
-random.shuffle(cards)
-print("Shuffled cards:", cards)
-
-# 1から20までの整数から重複なしで3つの要素を抽出
-random_numbers = random.sample(range(1, 21), 3)
-print("Random numbers:", random_numbers)
-
-
+from fastapi.responses import HTMLResponse
+import random
 
 app = FastAPI()
-
 
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
 
 @app.get("/omikuji")
 def omikuji():
@@ -52,5 +22,22 @@ def omikuji():
         "小凶",
         "大凶"
     ]
-    
-    return {"result" : omikuji_list[random.randrange(10)]}
+
+    return {"result": omikuji_list[random.randrange(10)]}
+
+@app.get("/index")
+def index():
+    html_content = """
+    <html>
+        <head>
+            <title>ホームページTOP</title>
+        </head>
+        <body>
+            <h1>ようこそ！</h1>
+            <p>岩田です。</p>
+            <p>FastAPIの課題で作成したページです。</p>
+            <p>おみくじはこちら /omikuji</p>
+        </body>
+    </html>
+    """
+    return HTMLResponse(content=html_content, status_code=200)
