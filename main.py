@@ -36,7 +36,6 @@ def index():
             <h1>ようこそ！</h1>
             <p>岩田です。</p>
             <p>FastAPIの課題で作成したページです。</p>
-            <p>おみくじはこちら /omikuji</p>
         </body>
     </html>
     """
